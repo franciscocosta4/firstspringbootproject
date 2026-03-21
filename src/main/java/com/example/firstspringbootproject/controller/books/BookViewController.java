@@ -1,8 +1,9 @@
-package com.example.firstspringbootproject.controller;
+package com.example.firstspringbootproject.controller.books;
 
 
 import com.example.firstspringbootproject.model.Book;
-import com.example.firstspringbootproject.service.BookService;
+import com.example.firstspringbootproject.service.books.BookService;
+
 import org.springframework.stereotype.Controller;        // Repara: Controller, não RestController
 import org.springframework.ui.Model;               // Para passar dados para o template
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +24,13 @@ public class BookViewController {
     @GetMapping
     public String listBooks(Model model) {
         model.addAttribute("books", bookService.getAllBooks());
-        return "listagem";
+        return "books/listagem";
     }
 
     @GetMapping("/new")
     public String showCreateForm(Model model) {
         model.addAttribute("book", new Book());
-        return "form";
+        return "books/form";
     }
 
         // GUARDAR novo livro: POST /books
@@ -38,7 +39,7 @@ public class BookViewController {
                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             // Se houver erros de validação, volta ao form
-            return "form";
+            return "books/form";
         }
         bookService.createBook(book);
         // Redirect para a lista após criar
@@ -51,7 +52,7 @@ public class BookViewController {
         return bookService.getBookById(id)
                 .map(b -> {
                     model.addAttribute("book", b);
-                    return "form";
+                    return "books/form";
                 })
                 .orElse("redirect:/books"); // se não encontrar, volta à lista
     }
@@ -62,7 +63,7 @@ public class BookViewController {
                              @Valid @ModelAttribute("book") Book book,
                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "form";
+            return "books/form";
         }
         bookService.updateBook(id, book);
         return "redirect:/books";
