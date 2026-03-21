@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Biblioteca - Livros</title>
+</head>
+<body>
+<h1>Lista de Livros</h1>
+
+<a th:href="@{/books/new}">Criar novo livro</a>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Autor</th>
+        <th>Ano</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- th:each percorre a lista "books" vinda do controller -->
+    <tr th:each="book : ${books}">
+        <!-- [[...]] escreve o valor escapado -->
+        <td>[[${book.id}]]</td>
+        <td>[[${book.title}]]</td>
+        <td>[[${book.author}]]</td>
+        <td>[[${book.year}]]</td>
+        <td>
+            <a th:href="@{'/books/' + ${book.id} + '/edit'}">Editar</a>
+            |
+            <a th:href="@{'/books/' + ${book.id} + '/delete'}"
+               onclick="return confirm('Tens a certeza que queres apagar?');">
+                Apagar
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
