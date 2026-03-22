@@ -4,6 +4,7 @@ package com.example.firstspringbootproject.controller.books;
 import com.example.firstspringbootproject.model.Book;
 import com.example.firstspringbootproject.service.books.BookService;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;        // Repara: Controller, não RestController
 import org.springframework.ui.Model;               // Para passar dados para o template
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +23,9 @@ public class BookViewController {
     }
 
     @GetMapping
-    public String listBooks(Model model) {
+    public String listBooks(Model model, Authentication auth  ) {
         model.addAttribute("books", bookService.getAllBooks());
+        model.addAttribute("username", auth.getName());
         return "books/listagem";
     }
 

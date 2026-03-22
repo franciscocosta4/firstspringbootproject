@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+  <form th:action="@{/auth/login}" method="post">
+    <input type="email" name="username" placeholder="Email"/>   <!-- name="username" mesmo usando email — é o nome que o Spring espera por defeito. -->
+    <input type="password" name="password" placeholder="Password"/>
+    <button type="submit">Entrar</button>
+    <p th:if="${param.error}">Credenciais inválidas.</p>
+    <p th:if="${param.logout}">Sessão terminada.</p>
+  </form>
+</body>
+</html>

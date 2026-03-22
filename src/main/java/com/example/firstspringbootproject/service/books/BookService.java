@@ -1,4 +1,4 @@
-package com.example.firstspringbootproject.service;
+package com.example.firstspringbootproject.service.books;
 
 import com.example.firstspringbootproject.model.Book;
 import com.example.firstspringbootproject.repository.BookRepository;

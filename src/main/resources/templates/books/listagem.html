@@ -3,10 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Biblioteca - Livros</title>
+    <link rel="stylesheet" th:href="@{/css/books.css}"/>
 </head>
 <body>
 <h1>Lista de Livros</h1>
-
+<div th:if="${#authorization.expression('isAuthenticated()')}">
+    Bem-vindo, <span th:text="${username}"></span> | 
+    <a th:href="@{/logout}">Sair</a>
+</div>
+<div th:unless="${#authorization.expression('isAuthenticated()')}">
+    <a th:href="@{/login}">Faça login</a>
+</div>
+<br>
 <a th:href="@{/books/new}">Criar novo livro</a>
 
 <table border="1" cellpadding="5" cellspacing="0">

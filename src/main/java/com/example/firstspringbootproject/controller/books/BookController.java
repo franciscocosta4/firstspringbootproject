@@ -1,7 +1,8 @@
-package com.example.firstspringbootproject.controller;  // Pacote dos controladores REST.
+package com.example.firstspringbootproject.controller.books;  // Pacote dos controladores REST.
 
 import com.example.firstspringbootproject.model.Book;
-import com.example.firstspringbootproject.service.BookService;
+import com.example.firstspringbootproject.service.books.BookService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

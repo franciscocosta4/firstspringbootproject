@@ -1,5 +1,4 @@
 package com.example.firstspringbootproject.model;
-import javax.print.DocFlavor.STRING;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -25,6 +24,7 @@ public class Book {
         this.title = title;
         this.author = author; 
     }
+    
     
     // getters e setters
 
