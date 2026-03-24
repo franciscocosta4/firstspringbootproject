@@ -1,51 +1,57 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Biblioteca - Livros</title>
     <link rel="stylesheet" th:href="@{/css/books.css}"/>
 </head>
 <body>
-<h1>Lista de Livros</h1>
-<div th:if="${#authorization.expression('isAuthenticated()')}">
-    Bem-vindo, <span th:text="${username}"></span> | 
-    <a th:href="@{/logout}">Sair</a>
-</div>
-<div th:unless="${#authorization.expression('isAuthenticated()')}">
-    <a th:href="@{/login}">Faça login</a>
-</div>
-<br>
-<a th:href="@{/books/new}">Criar novo livro</a>
+<div class="page-wrapper">
 
-<table border="1" cellpadding="5" cellspacing="0">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Título</th>
-        <th>Autor</th>
-        <th>Ano</th>
-        <th>Ações</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- th:each percorre a lista "books" vinda do controller -->
-    <tr th:each="book : ${books}">
-        <!-- [[...]] escreve o valor escapado -->
-        <td>[[${book.id}]]</td>
-        <td>[[${book.title}]]</td>
-        <td>[[${book.author}]]</td>
-        <td>[[${book.year}]]</td>
-        <td>
-            <a th:href="@{'/books/' + ${book.id} + '/edit'}">Editar</a>
-            |
-            <a th:href="@{'/books/' + ${book.id} + '/delete'}"
-               onclick="return confirm('Tens a certeza que queres apagar?');">
-                Apagar
-            </a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+    <div class="top-bar">
+        <div sec:authorize="isAuthenticated()" class="user-info">
+            <span class="user-greeting">
+                Bem-vindo, <strong sec:authentication="principal.displayName"></strong>
+            </span>
+            <form class="logout-form" th:action="@{/logout}" method="post">
+                <button type="submit" class="btn-logout">Sair</button>
+            </form>
+        </div>
+        <div sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}" class="btn-link">Entrar</a>
+        </div>
+    </div>
 
+    <h1>Lista de Livros</h1>
+
+    <a th:href="@{/books/new}">Criar novo livro</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Ano</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td>[[${book.id}]]</td>
+            <td>[[${book.title}]]</td>
+            <td>[[${book.author}]]</td>
+            <td>[[${book.year}]]</td>
+            <td>
+                <a th:href="@{'/books/' + ${book.id} + '/edit'}">Editar</a>
+                <a th:href="@{'/books/' + ${book.id} + '/delete'}"
+                   onclick="return confirm('Tens a certeza que queres apagar?');">Apagar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
 </body>
 </html>

@@ -11,34 +11,43 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
-@Controller
-@RequestMapping("/auth")
+@Controller       
+@RequestMapping("/")  // sem nenhum prefixo , para ficar /login e /register
 public class AuthController {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    // o Spring injeta automaticamente os dois @Beans pelo construtor
     public AuthController(UserRepository ur, PasswordEncoder pe) {
         this.userRepository = ur;
         this.passwordEncoder = pe;
     }
 
-    @GetMapping("/login")
+    @GetMapping("/login")   // responde a GET /auth/login → mostrar o formulário
     public String loginPage() {
-        return "auth/login"; // templates/auth/login.html
+        return "auth/login";   // caminho para templates, abre templates/auth/login.html
     }
 
     @GetMapping("/register")
     public String registerPage(Model model) {
+        // Model = objeto que passa dados do controller para o template
         model.addAttribute("user", new User());
-        return "auth/register"; // templates/auth/register.html
+        // "user" é o nome com que o Thymeleaf acede ao objeto: th:object="${user}"
+        // new User() cria um objeto vazio para o form fazer bind dos campos
+        return "auth/register";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/register")   // responde a POST /auth/register → processar o form
     public String register(@ModelAttribute User user) {
+        // @ModelAttribute: o Spring lê os campos do form e preenche o objeto User automaticamente
+        // user.getEmail(), user.getUsername(), user.getPassword() já têm os valores do form
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-        return "redirect:/auth/login";
+        // encode() → faz o hash BCrypt
+
+        userRepository.save(user);   //registo do user na bd
+
+        return "redirect:/login"; //redireciona para o login, não é auth/login pois é um redirect (url, não pastas)
     }
 }
