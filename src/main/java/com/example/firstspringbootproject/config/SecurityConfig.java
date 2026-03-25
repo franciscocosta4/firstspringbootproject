@@ -43,7 +43,7 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(auth -> auth // Isto significa: “quando me deres o auth… “…eu faço estas configurações com ele”
                 // auth -> auth é um lambda (função anonima do java) : recebe o configurador e defines as regras
-                .requestMatchers("/register", "/login", "/css/**").permitAll()
+                .requestMatchers("/", "/welcome", "/register", "/login", "/css/**").permitAll()
                 // requestMatchers: define a que URLs esta regra se aplica
                 // "/css/**" → o ** significa "qualquer coisa a partir daqui"
                 // permitAll() → qualquer pessoa pode aceder, mesmo sem login
@@ -58,7 +58,7 @@ public class SecurityConfig {
                 .permitAll()
             )   
             .logout(logout -> logout
-                .logoutSuccessUrl("/login?logout")  // após logout redireciona para o login
+                .logoutSuccessUrl("/welcome?logout")  // após logout redireciona para o login
                  // ?logout é um query param que o Thymeleaf lê para mostrar a mensagem "sessão terminada"
                 .permitAll()
             );

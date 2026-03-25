@@ -25,38 +25,31 @@
         </div>
       </div>
 
-      <h1>Lista de Livros</h1>
+      <h1>Lista de autores</h1>
 
-      <a th:href="@{/books/new}">Criar novo livro</a>
+      <a th:href="@{/authors/new}">Criar novo autor</a>
 
       <table>
         <thead>
           <tr>
             <th>ID</th>
-            <th>nome</th>
-            <th>Autor</th>
-            <th>Ano</th>
-            <th>Ações</th>
+            <th>name</th>
+            <th>biography</th>
+            <th>bornDate</th>
+            <th>deathDate</th>
           </tr>
         </thead>
         <tbody>
-          <tr th:each="book : ${books}">
-            <td>[[${book.id}]]</td>
-            <td>[[${book.title}]]</td>
+          <tr th:each="author : ${authors}">
+            <td>[[${author.id}]]</td>
+            <td>[[${author.name}]]</td>
+            <td>[[${author.biography}]]</td>
+            <td>[[${author.bornDate}]]</td>
+            <td>[[${author.deathDate}]]</td>
             <td>
-              <!-- iterStat é uma variável de estado automática do th:each -->
-              <!-- dás-lhe o nome que quiseres: authorStat, stat, loop... -->
-              <span th:each="author, authorStat : ${book.authors}">
-                [[${author.name}]]
-                <!-- authorStat.last → true se for o último elemento -->
-                <span th:if="${!authorStat.last}">, </span>
-              </span>
-            </td>
-            <td>[[${book.year}]]</td>
-            <td>
-              <a th:href="@{'/books/' + ${book.id} + '/edit'}">Editar</a>
+              <a th:href="@{'/authors/' + ${author.id} + '/edit'}">Editar</a>
               <a
-                th:href="@{'/books/' + ${book.id} + '/delete'}"
+                th:href="@{'/authors/' + ${author.id} + '/delete'}"
                 onclick="return confirm('Tens a certeza que queres apagar?');"
                 >Apagar</a
               >

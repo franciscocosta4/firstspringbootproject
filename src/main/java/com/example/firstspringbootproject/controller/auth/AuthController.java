@@ -3,6 +3,11 @@ package com.example.firstspringbootproject.controller.auth; // Ajusta ao teu pac
 // Imports essenciais para Spring MVC + Security + Thymeleaf + JPA + Validation
 import com.example.firstspringbootproject.model.User; // Ajusta ao teu pacote da entidade User
 import com.example.firstspringbootproject.repository.UserRepository; // Ajusta ao teu pacote
+
+import java.net.Authenticator;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller       
-@RequestMapping("/")  // sem nenhum prefixo , para ficar /login e /register
 public class AuthController {
 
     private final UserRepository userRepository;
@@ -24,8 +28,11 @@ public class AuthController {
         this.passwordEncoder = pe;
     }
 
-    @GetMapping("/login")   // responde a GET /auth/login → mostrar o formulário
-    public String loginPage() {
+    @GetMapping("/login")   // responde a GET /login → mostrar o formulário
+    public String loginPage(Authentication auth) {
+        if ( auth != null && auth.isAuthenticated()) { // se o user já tiver autenticado 
+            return "redirect:/books"; 
+        }   
         return "auth/login";   // caminho para templates, abre templates/auth/login.html
     }
 
