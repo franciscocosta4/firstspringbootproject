@@ -1,0 +1,42 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Editar Livro</title>
+    <link rel="stylesheet" th:href="@{/css/books.css}" />
+  </head>
+  <body>
+    <div class="page-wrapper">
+
+      <h1>Editar Livro</h1>
+
+      <!-- th:action usa o id do book para construir o URL correto -->
+      <form th:action="@{/books/{id}(id=${bookRequest.id})}"
+            th:object="${bookRequest}"
+            method="post">
+        <div>
+          <label>Título</label>
+          <input type="text" th:field="*{title}" />
+        </div>
+        <div>
+          <label>Ano</label>
+          <input type="number" th:field="*{year}" />
+        </div>
+        <div>
+          <label>Autores</label>
+          <select multiple th:field="*{authorIds}">
+            <option th:each="a : ${authors}"
+                    th:value="${a.id}"
+                    th:text="${a.name}">
+            </option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="submit">Guardar</button>
+          <a th:href="@{/books}">Cancelar</a>
+        </div>
+      </form>
+
+    </div>
+  </body>
+</html>

@@ -6,7 +6,6 @@ import com.example.firstspringbootproject.model.Book;
 import com.example.firstspringbootproject.repository.AuthorRepository;
 import com.example.firstspringbootproject.repository.BookRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -62,6 +61,7 @@ public class BookService {
     public Optional<Book> getBookById(Long id) {
         return bookRepository.findById(id);
     }
+
 // devolve Optional<Book> para o controller poder devolver 404 se não existir
     public Optional<Book> updateBook(Long id, BookRequest request) {
 

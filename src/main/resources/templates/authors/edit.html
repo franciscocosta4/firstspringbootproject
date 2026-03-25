@@ -1,0 +1,41 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Editar Autor</title>
+    <link rel="stylesheet" th:href="@{/css/books.css}" />
+  </head>
+  <body>
+    <div class="page-wrapper">
+
+      <h1>Editar Autor</h1>
+
+      <!-- th:action usa o id do book para construir o URL correto -->
+      <form th:action="@{/authors/{id}(id=${author.id})}"
+            th:object="${author}"
+            method="post">
+        <div>
+          <label>Nome</label>
+          <input type="text" th:field="*{name}" />
+        </div>
+        <div>
+          <label>Biografia</label>
+          <input type="text" th:field="*{biography}" />
+        </div>
+        <div>
+          <label>Data de nascimento</label>
+          <input type="date" th:field="*{bornDate}" />
+        </div>
+        <div>
+          <label>Data de morte</label>
+          <input type="date" th:field="*{deathDate}" />
+        </div>
+        <div class="form-actions">
+          <button type="submit">Guardar</button>
+          <a th:href="@{/authors}">Cancelar</a>
+        </div>
+      </form>
+
+    </div>
+  </body>
+</html>

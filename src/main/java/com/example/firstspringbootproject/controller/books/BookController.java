@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 // @RestController = @Controller + @ResponseBody
 // significa que todos os métodos devolvem dados (JSON) diretamente no body da resposta

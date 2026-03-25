@@ -45,7 +45,7 @@ public class BookViewController {
         // o template usa: th:text="${bookId} == null ? 'Novo Livro' : 'Editar Livro'"
         model.addAttribute("bookId", null);
 
-        return "books/form";
+        return "books/create";
     }
 
     // GUARDAR novo livro: POST /books
@@ -76,6 +76,7 @@ public class BookViewController {
                 // não podemos passar o Book diretamente porque o form usa authorIds (List<Long>)
                 // e o Book tem authors (Set<Author>)
                 BookRequest req = new BookRequest();
+                req.setId(book.getId());  // necessário para o th:action do edit.html
                 req.setTitle(book.getTitle());
                 req.setYear(book.getYear());
 
@@ -96,7 +97,7 @@ public class BookViewController {
                 // usado em: th:action="${bookId == null} ? @{/books} : @{/books/{id}(id=${bookId})}"
                 model.addAttribute("bookId", id);
 
-                return "books/form";
+                return "books/edit";
             })
             // .orElse() — se o Optional estiver vazio (livro não existe)
             // redireciona para a lista em vez de mostrar erro
@@ -108,10 +109,7 @@ public class BookViewController {
     // nota: usamos POST em vez de PUT porque forms HTML só suportam GET e POST
     // em APIs REST usaríamos @PutMapping, mas em controllers de views é @PostMapping
     @PostMapping("/{id}")
-    public String updateBook(
-            @PathVariable Long id,
-            @ModelAttribute BookRequest bookRequest) {
-
+    public String updateBook(@PathVariable Long id,@ModelAttribute BookRequest bookRequest) {
         // o service devolve Optional<Book> mas aqui não precisamos do resultado
         // só nos interessa redirecionar após a operação
         bookService.updateBook(id, bookRequest);
